@@ -39,6 +39,9 @@ class Technicien
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $roles = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $secondRole = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +139,18 @@ class Technicien
     public function setRoles(?string $roles): static
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getSecondRole(): ?string
+    {
+        return $this->secondRole;
+    }
+
+    public function setSecondRole(?string $secondRole): static
+    {
+        $this->secondRole = $secondRole;
 
         return $this;
     }
