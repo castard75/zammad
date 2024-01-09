@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Entity\Task;
 use ZammadAPIClient\Client;
+use ZammadAPIClient\Client\Response as ZammadResponse;
 use ZammadAPIClient\ResourceType;
 
 // the name of the command is what users type after "php bin/console"
@@ -42,7 +43,42 @@ class ZammadApi extends Command
     }
 
 
-public function getDatas(){
+    public function getDatas() {
+        try {
+            // Connexion du client
+            $client = new Client([
+                'url'      => 'https://zammadtest.nixia.it',
+                'username' => 'castard75@gmail.com',
+                'password' => 'KEg7595qtd3ABk',
+            ]);
+    
+            // Récupérer les utilisateurs
+            $findAllUsers = $client->resource(ResourceType::USER)->all();
+    
+            // Vérifier si la réponse est un tableau (cas d'erreur) ou un objet (cas de succès)
+            if (!is_array($findAllUsers)) {
+                // Gérer la réponse d'erreur
+                dump("Erreur : " . json_encode($findAllUsers));
+            } else {
+                $users = $findAllUsers;
+                foreach($users as $item ) {
+                 dump($item->getValues());
+
+                }
+               
+    
+    
+            }
+    
+        } catch (\Exception $e) {
+            // Gérer les exceptions (journaliser, afficher, etc.)
+            dump("Erreur : " . $e->getMessage());
+        }
+    }
+    
+    
+
+public function essai(){
   
     // $ListeTask = $this->em->getRepository(Task::class)->findAll();
 
@@ -56,8 +92,19 @@ public function getDatas(){
 
     
     $findAllUsers = $client->resource( ResourceType::USER )->all();
-  dump($tickets);
- 
+    
+    // $last_response = new ZammadResponse($findAllUsers->getStatusCode(), $findAllUsers->getReasonPhrase(), $findAllUsers->getBody());
+    // $responseBody = $last_response->getBody();
+$datas = $findAllUsers->getValues();
+    dump($datas);
+
+
+
+//   if ($findAllUsers->getStatusCode() == 200) {
+//     $content = json_decode($findAllUsers->getContent(), true);
+//     dump($findAllUsers);
+
+// }
 
 
     // $ticket = $client->resource( ResourceType::TICKET );
@@ -79,7 +126,7 @@ public function getDatas(){
     //        "internal": false
     //     }
     //  }
-    // $ticket->save(); // Will create a new ticket object in Zammad
+    $ticket->save(); // Will create a new ticket object in Zammad
 
 
 }

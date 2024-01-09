@@ -30,6 +30,15 @@ class Technicien
     #[ORM\Column]
     private ?int $organizationId = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $login = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $roles = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +100,42 @@ class Technicien
     public function setOrganizationId(int $organizationId): static
     {
         $this->organizationId = $organizationId;
+
+        return $this;
+    }
+
+    public function getLogin(): ?string
+    {
+        return $this->login;
+    }
+
+    public function setLogin(?string $login): static
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getRoles(): ?string
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(?string $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
