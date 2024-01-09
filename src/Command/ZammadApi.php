@@ -77,6 +77,7 @@ class ZammadApi extends Command
 
                     $Id = $allDatas['id'];
                      $active = null;
+                    
 
                      if (trim($allDatas['active']) != "") {
 
@@ -87,6 +88,7 @@ class ZammadApi extends Command
                         $rolesArray = $allDatas['roles'];
                         $firstRole = NULL;
                         $secondRole= NULL;
+
 
                      if (is_array($rolesArray)) {
                          if (count($rolesArray) >= 2) {
@@ -107,7 +109,7 @@ class ZammadApi extends Command
                          $rolesArray = NULL;
                      }
 
-                         $organization_id = NULL;
+                            $organization_id = NULL;
                             if (trim($allDatas['organization_id']) != "") {
        
                                $organization_id = trim($allDatas['organization_id']);
@@ -294,57 +296,5 @@ class ZammadApi extends Command
     
     
 
-public function essai(){
-  
-    // $ListeTask = $this->em->getRepository(Task::class)->findAll();
-
-    //Connexion du client
-    $client = new ZammadClient([
-        'url'           => 'https://zammadtest.nixia.it', // URL to your Zammad installation
-        'username'      => 'castard75@gmail.com',  // Username to use for authentication
-        'password'      => 'KEg7595qtd3ABk',           // Password to use for authentication
-
-    ]);
-
-    
-    $findAllUsers = $client->resource( ResourceType::USER )->all();
-    
-    // $last_response = new ZammadResponse($findAllUsers->getStatusCode(), $findAllUsers->getReasonPhrase(), $findAllUsers->getBody());
-    // $responseBody = $last_response->getBody();
-$datas = $findAllUsers->getValues();
-    dump($datas);
-
-
-
-//   if ($findAllUsers->getStatusCode() == 200) {
-//     $content = json_decode($findAllUsers->getContent(), true);
-//     dump($findAllUsers);
-
-// }
-
-
-    // $ticket = $client->resource( ResourceType::TICKET );
-    // $ticket->setValue( 'title', 'My new ticket' );
-    // $ticket->setValue( 'group', 'exemple' );
-    // $ticket->setValue( 'customer', 'My new ticket' );
-    // $ticket->setValue( 'article', 'My new ticket' );
-    // // ...
-    // // Set additional values
-    // // 
-    // {
-    //     "title": "Help me!",
-    //     "group": "2nd Level",
-    //     "customer": "david@example.com",
-    //     "article": {
-    //        "subject": "My subject", subject
-    //        "body": "I am a message!", desciption
-    //        "type": "note",
-    //        "internal": false
-    //     }
-    //  }
-    $ticket->save(); // Will create a new ticket object in Zammad
-
-
-}
 
 }
