@@ -6,6 +6,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use ZammadAPIClient\Client as ZammadClient;
+use ZammadAPIClient\ResourceType;
 
 class TicketsSync extends Command
 {
@@ -25,51 +27,46 @@ class TicketsSync extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getGroups();
+        $this->createTicket();
         return Command::SUCCESS;
     }
 
-    public function getGroups()
-    {
-        $url = 'https://zammadtest.nixia.it/api/v1/tickets';
 
-        $headers = [
-            'Content-Type' => 'application/json',
-        ];
-
-        $options = [
-            'headers' => $headers,
-            'auth_basic' => ['castard75@gmail.com', 'KEg7595qtd3ABk'],
-        ];
+public function createTicket(){
 
 
-        $ticketData = [
-            "title" => "Help me!",
-            "group" => "2nd Level",
-            "customer" => "david@example.com",
-            "article" => [
-                "subject" => "My subject",
-                "body" => "I am a message!",
-                "type" => "note",
-                "internal" => false
-            ]
-        ];
+    
+        // Connexion 
+        $client = new ZammadClient([
+           'url'      => 'https://zammadtest.nixia.it',
+           'username' => 'castard75@gmail.com',
+           'password' => 'KEg7595qtd3ABk',
+       ]);
 
-        try {
-            $response = $this->httpClient->request('GET', $url, $options);
-     
 
-            $statusCode = $response->getStatusCode();
 
-            if ($statusCode === 200) {
-                $data = $response->toArray(); // Supposons que la réponse est au format JSON
-                dump($data);
-            } else {
-                dump("Échec de la récupération des groupes. Status Code: $statusCode");
-                dump($response->getContent());
-            }
-        } catch (\Exception $e) {
-            dump("Exception during HTTP request: " . $e->getMessage());
-        }
+       $ticketData = [
+        "title" => "titre",
+        "group_id" =>3,
+        "customer" => "test@aigrettes.fr",
+        "priority" => "2 normal",
+        "owner" => "castard75@gmail.com",
+        "article" => [
+            "subject" => "subject",
+            "body" => "I am a message!",
+            "type" => "note",
+            "internal" => false
+        ]
+    ];
+       
+       $ticket = $client->resource( ResourceType::TICKET );
+       $ticket->setValues($ticketData);
+       $ticket->save();
+    //    dump($ticket);
+   
+  
     }
+
+
+
 }
