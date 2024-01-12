@@ -73,6 +73,15 @@ class Task
     #[ORM\Column(nullable: true)]
     private ?int $transfert = null;
 
+    #[ORM\Column(length: 150)]
+    private ?string $clientEmail = null;
+
+    #[ORM\Column(length: 150)]
+    private ?string $technicienEmail = null;
+
+    #[ORM\Column]
+    private ?int $groupId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -266,6 +275,42 @@ class Task
     public function setTransfert(?int $transfert): static
     {
         $this->transfert = $transfert;
+
+        return $this;
+    }
+
+    public function getClientEmail(): ?string
+    {
+        return $this->clientEmail;
+    }
+
+    public function setClientEmail(string $clientEmail): static
+    {
+        $this->clientEmail = $clientEmail;
+
+        return $this;
+    }
+
+    public function getTechnicienEmail(): ?string
+    {
+        return $this->technicienEmail;
+    }
+
+    public function setTechnicienEmail(string $technicienEmail): static
+    {
+        $this->technicienEmail = $technicienEmail;
+
+        return $this;
+    }
+
+    public function getGroupId(): ?int
+    {
+        return $this->groupId;
+    }
+
+    public function setGroupId(int $groupId): static
+    {
+        $this->groupId = $groupId;
 
         return $this;
     }

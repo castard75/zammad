@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\GroupsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: GroupsRepository::class)]
+#[ApiResource]
 class Groups
 {
     #[ORM\Id]
